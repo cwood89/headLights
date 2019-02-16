@@ -1,0 +1,11 @@
+body {
+  background-color: black;
+  background-size: cover;
+  background-attachment: fixed; 
+  padding-top: 65px; 
+  background-repeat: no-repeat;
+  background-position: center;
+}
+h1{
+  color:whitesmoke;
+}
