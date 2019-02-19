@@ -7,12 +7,16 @@
   <h1>{{sport}} Articles</h1>
 
   {{#each results}}
-  <div class="card mb-3" style="background-color:rgb(255, 255, 255, 0.85)">
+  <div id="index{{@index}}" class="card mb-3" style="background-color:rgb(255, 255, 255, 0.85)">
     <h5 class="card-header">{{sport}}</h5>
     <div class="card-body">
       <h5 class="card-title">{{title}}</h5>
       <p class="card-text">{{preview}}</p>
-      <a href="{{link}}" class="btn btn-primary">Go to Article</a>
+      <a onclick="openInNewTab('{{link}}');" class="btn btn-info" style="color: white">Go to
+        Article</a>
+      <a class="btn btn-danger" onclick="saveArticle();" style="color: white"> Save Article</a>
+      <span class="hidden-link">{{link}}</span>
+      <span class="hidden-sport">{{sport}}</span>
     </div>
   </div>
   {{/each}}

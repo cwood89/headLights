@@ -1,10 +1,51 @@
 const cheerio = require("cheerio");
 const axios = require("axios");
 
+const mongoose = require("mongoose");
+const Article = require("../models");
+
 module.exports = function (app) {
+
+
   app.get("/", (req, res) => {
-    res.render("index")
+    let urlArr = [
+      "/assets/images/basketball.jpg", "/assets/images/football.png", "/assets/images/baseball.jpg", "/assets/images/soccer.jpg", "/assets/images/hockey.jpg"];
+
+    let backgroundUrl = urlArr[Math.floor(Math.random() * urlArr.length)];
+    let data = {
+      image: backgroundUrl,
+    };
+
+    res.render("home", data);
   });
+
+
+
+  app.get("/saved", (req, res) => {
+    let urlArr = [
+      "/assets/images/basketball.jpg", "/assets/images/football.png", "/assets/images/baseball.jpg", "/assets/images/soccer.jpg", "/assets/images/hockey.jpg"];
+
+    let backgroundUrl = urlArr[Math.floor(Math.random() * urlArr.length)];
+    console.log(backgroundUrl);
+    console.log(Math.floor(Math.random() * urlArr.length + 1));
+
+    let data = {
+      results: [],
+      image: backgroundUrl,
+    };
+
+    db.Article.find({})
+      .then(function (dbArticle) {
+        // If we were able to successfully find Articles, send them back to the client
+        dbArticle.forEach(element => {
+          data.results.push(dbArticle)
+        });
+        res.render("index", data);
+      })
+      .catch((err) => console.log(err));
+  });
+
+
 
   app.get("/basketball", (req, res) => {
     axios.get("https://bleacherreport.com/nba/archives").then((response) => {
@@ -35,6 +76,8 @@ module.exports = function (app) {
       .catch((err) => console.log(err))
   });
 
+
+
   app.get("/football", (req, res) => {
     axios.get("https://bleacherreport.com/nfl/archives").then((response) => {
       let data = {
@@ -62,6 +105,7 @@ module.exports = function (app) {
       res.render("index", data);
     }).catch((err) => console.log(err))
   });
+
 
 
   app.get("/baseball", (req, res) => {
@@ -93,6 +137,8 @@ module.exports = function (app) {
       .catch((err) => console.log(err))
   });
 
+
+
   app.get("/soccer", (req, res) => {
     axios.get("https://bleacherreport.com/world-football/archives").then((response) => {
       let data = {
@@ -120,6 +166,8 @@ module.exports = function (app) {
       res.render("index", data);
     }).catch((err) => console.log(err))
   });
+
+
 
   app.get("/hockey", (req, res) => {
     axios.get("https://bleacherreport.com/nhl/archives").then((response) => {
