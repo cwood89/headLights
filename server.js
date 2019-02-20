@@ -9,7 +9,18 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 
-mongoose.connect("mongodb://localhost/scrapedb", { useNewUrlParser: true });
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrapedb";
+
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+var db = mongoose.connection;
+
+db.once("connected", function () {
+  console.log("Mongoose connection successful.");
+});
+
+db.on("error", function (error) {
+  console.log("DB Connection Error", error);
+})
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");

@@ -5,7 +5,8 @@ function openInNewTab(url) {
 
 
 function saveArticle() {
-  let parent = $(event.target).parent();
+  let target = $(event.target)
+  let parent = target.parent();
   let article = {
     title: parent.children(".card-title").text(),
     preview: parent.children(".card-text").text(),
@@ -20,8 +21,8 @@ function saveArticle() {
     data: article
   })
     .then(function (data) {
-      this.className = "btn disabled danger";
-      this.text("Saved");
+      // target.innerHTML() = `
+      // <a class="btn btn-danger disabled" role="button" aria-disabled="true">Saved</a>`;
       alert("article is saved");
       console.log(data)
     })
