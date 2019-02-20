@@ -12,6 +12,7 @@ module.exports = function (app) {
       hasBeenRead: req.body.hasBeenRead
     };
     console.log(data);
+
     Article.create(data)
       .then((dbArticle) => {
         console.log(dbArticle);
@@ -19,6 +20,16 @@ module.exports = function (app) {
       })
       .catch((err) => {
         console.log(err);
+      });
+  });
+
+
+  app.delete("/api/articles/:id", (req, res) => {
+    Article.deleteOne({ _id: req.params.id })
+      .then(data => {
+        res.json(data);
+      }).catch(function (err, data) {
+        res.json(err);
       });
   })
 

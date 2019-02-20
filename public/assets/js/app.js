@@ -28,3 +28,17 @@ function saveArticle() {
     })
     .catch((err) => console.log(err));
 }
+
+function deleteArticle() {
+  var id = $(event.target).attr("data-id");
+  console.log("id " + id)
+  $.ajax({
+    method: "DELETE",
+    url: "api/articles/" + id
+  })
+    .then(function (data) {
+      console.log(data);
+      location.reload();
+    })
+    .catch(err => console.log(err));
+}

@@ -26,21 +26,19 @@ module.exports = function (app) {
       "/assets/images/basketball.jpg", "/assets/images/football.png", "/assets/images/baseball.jpg", "/assets/images/soccer.jpg", "/assets/images/hockey.jpg"];
 
     let backgroundUrl = urlArr[Math.floor(Math.random() * urlArr.length)];
-    console.log(backgroundUrl);
-    console.log(Math.floor(Math.random() * urlArr.length + 1));
-
     let data = {
       results: [],
       image: backgroundUrl,
     };
 
-    db.Article.find({})
+    Article.find({})
       .then(function (dbArticle) {
         // If we were able to successfully find Articles, send them back to the client
-        dbArticle.forEach(element => {
-          data.results.push(dbArticle)
-        });
-        res.render("index", data);
+        console.log("================================")
+        console.log(dbArticle);
+        console.log("================================")
+        data.results = dbArticle;
+        res.render("saved", data);
       })
       .catch((err) => console.log(err));
   });
@@ -69,7 +67,6 @@ module.exports = function (app) {
           hasBeenRead: false
 
         })
-        console.log(data.results);
       })
       res.render("index", data);
     })
@@ -100,7 +97,6 @@ module.exports = function (app) {
           hasBeenRead: false
 
         })
-        console.log(data.results);
       })
       res.render("index", data);
     }).catch((err) => console.log(err))
@@ -130,7 +126,6 @@ module.exports = function (app) {
           hasBeenRead: false
 
         })
-        console.log(data.results);
       })
       res.render("index", data);
     })
@@ -147,7 +142,6 @@ module.exports = function (app) {
         image: "/assets/images/soccer.jpg"
       }
 
-
       const $ = cheerio.load(response.data);
 
 
@@ -161,7 +155,6 @@ module.exports = function (app) {
           hasBeenRead: false
 
         })
-        console.log(data.results);
       })
       res.render("index", data);
     }).catch((err) => console.log(err))
@@ -191,7 +184,6 @@ module.exports = function (app) {
           hasBeenRead: false
 
         })
-        console.log(data.results);
       })
       res.render("index", data);
     })
