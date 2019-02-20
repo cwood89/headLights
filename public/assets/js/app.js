@@ -21,12 +21,10 @@ function saveArticle() {
     data: article
   })
     .then(function (data) {
-      // target.innerHTML() = `
-      // <a class="btn btn-danger disabled" role="button" aria-disabled="true">Saved</a>`;
-      alert("article is saved");
-      console.log(data)
+      alert("Article is saved!");
     })
     .catch((err) => console.log(err));
+  target.hide();
 }
 
 function deleteArticle() {
@@ -37,7 +35,6 @@ function deleteArticle() {
     url: "api/articles/" + id
   })
     .then(function (data) {
-      console.log(data);
       location.reload();
     })
     .catch(err => console.log(err));

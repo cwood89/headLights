@@ -22,21 +22,14 @@ module.exports = function (app) {
 
 
   app.get("/saved", (req, res) => {
-    let urlArr = [
-      "/assets/images/basketball.jpg", "/assets/images/football.png", "/assets/images/baseball.jpg", "/assets/images/soccer.jpg", "/assets/images/hockey.jpg"];
 
-    let backgroundUrl = urlArr[Math.floor(Math.random() * urlArr.length)];
     let data = {
       results: [],
-      image: backgroundUrl,
+      image: "/assets/images/baseball.jpg",
     };
 
     Article.find({})
       .then(function (dbArticle) {
-        // If we were able to successfully find Articles, send them back to the client
-        console.log("================================")
-        console.log(dbArticle);
-        console.log("================================")
         data.results = dbArticle;
         res.render("saved", data);
       })
