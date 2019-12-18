@@ -1,6 +1,6 @@
 const cheerio = require("cheerio");
 const axios = require("axios");
-
+const pretty = require("pretty");
 const mongoose = require("mongoose");
 const Article = require("../models");
 
@@ -9,7 +9,8 @@ module.exports = function (app) {
 
   app.get("/", (req, res) => {
     let urlArr = [
-      "/assets/images/basketball.jpg", "/assets/images/football.png", "/assets/images/baseball.jpg", "/assets/images/soccer.jpg", "/assets/images/hockey.jpg"];
+      "/assets/images/basketball.jpg", "/assets/images/football.png", "/assets/images/baseball.jpg", "/assets/images/soccer.jpg", "/assets/images/hockey.jpg"
+    ];
 
     let backgroundUrl = urlArr[Math.floor(Math.random() * urlArr.length)];
     let data = {
@@ -39,33 +40,37 @@ module.exports = function (app) {
 
 
   app.get("/basketball", (req, res) => {
-    axios.get("https://bleacherreport.com/nba/archives").then((response) => {
+    axios.get("https://sports.yahoo.com/nba/").then((response) => {
       let data = {
         results: [],
         sport: "Basketball",
         image: "/assets/images/basketball.jpg"
       }
 
-
       const $ = cheerio.load(response.data);
 
+      $("li.js-stream-content ").each((i, element) => {
+        let el = $(element).children('div').children("div")
+        let img = $(el).children('div').children('img').attr("src")
+        console.log(`Elem=====${el}=====`)
 
-      $("li.even, li.odd").each((i, element) => {
         data.results.push({
 
           title: $(element).children("h3").text(),
           preview: $(element).children("p").not(".meta").text(),
           link: "https://bleacherreport.com" + $(element).children("h3").children("a").attr("href"),
           sport: "Basketball",
+          image: img,
           hasBeenRead: false
 
         })
+        console.log(`Article=====\n${img}\n=============`)
       })
       res.render("index", data);
     })
       .catch((err) => console.log(err))
-  });
 
+  });
 
 
   app.get("/football", (req, res) => {
