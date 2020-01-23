@@ -1,8 +1,9 @@
 const cheerio = require("cheerio");
 const axios = require("axios");
-const pretty = require("pretty");
 const mongoose = require("mongoose");
 const Article = require("../models");
+const puppeteer = require("puppeteer");
+
 
 module.exports = function (app) {
 
@@ -40,35 +41,33 @@ module.exports = function (app) {
 
 
   app.get("/basketball", (req, res) => {
-    axios.get("https://sports.yahoo.com/nba/").then((response) => {
-      let data = {
-        results: [],
-        sport: "Basketball",
-        image: "/assets/images/basketball.jpg"
-      }
+    // axios.get("https://sports.yahoo.com/nba/").then((response) => {
+    //   let data = {
+    //     results: [],
+    //     sport: "Basketball",
+    //     image: "/assets/images/basketball.jpg"
+    //   }
 
-      const $ = cheerio.load(response.data);
+    //   const $ = cheerio.load(response.data);
 
-      $("li.js-stream-content ").each((i, element) => {
-        let el = $(element).children('div').children("div")
-        let img = $(el).children('div').children('img').attr("src")
-        console.log(`Elem=====${el}=====`)
+    //   $("li.js-stream-content ").each((i, element) => {
+    //     let resultObj = {
+    //       title: $(element).children('div').children("div").children('div:nth-child(2)').children('div').children('a').children('h4').text(),
+    //       preview: "",
+    //       link: $(element).children('div').children("div").children('div:nth-child(2)').children('div').children('a').attr('href'),
+    //       sport: "Basketball",
+    //       image: $(element).children('div').children("div").children('div').children('img').attr("src"),
+    //       hasBeenRead: false
+    //     }
+    //     console.log(`Elem=====${$(element).children('div').children()}=====`)
+    //     console.log(resultObj)
+    //     //check if data exists, create object and then push if no data or error render no results
+    //     data.results.push(resultObj)
+    //   })
+    //   res.render("index", data)
+    // })
+    //   .catch((err) => console.log(err))
 
-        data.results.push({
-
-          title: $(element).children("h3").text(),
-          preview: $(element).children("p").not(".meta").text(),
-          link: "https://bleacherreport.com" + $(element).children("h3").children("a").attr("href"),
-          sport: "Basketball",
-          image: img,
-          hasBeenRead: false
-
-        })
-        console.log(`Article=====\n${img}\n=============`)
-      })
-      res.render("index", data);
-    })
-      .catch((err) => console.log(err))
 
   });
 

@@ -1,3 +1,7 @@
+//Launch puppeteer when page loads, fetch new articles in background. Serve cached articles to combat puppeteers speed.
+//Need to prevent duplicate articles from saving.
+//If new articles are added update sport page.
+
 const express = require("express");
 const app = express();
 const exphbs = require("express-handlebars");
