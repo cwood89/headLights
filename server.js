@@ -35,3 +35,7 @@ require("./routes/htmlRoutes")(app);
 app.listen(PORT, function () {
   console.log("Server started. Go to localhost:" + PORT);
 });
+
+// app.on('listening', function() {
+//   // Put puppeteer function here
+// })
