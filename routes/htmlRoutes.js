@@ -2,7 +2,6 @@ const cheerio = require("cheerio");
 const axios = require("axios");
 const mongoose = require("mongoose");
 const Article = require("../models");
-const puppeteer = require("puppeteer");
 
 
 module.exports = function (app) {
@@ -41,34 +40,19 @@ module.exports = function (app) {
 
 
   app.get("/basketball", (req, res) => {
-    // axios.get("https://sports.yahoo.com/nba/").then((response) => {
-    //   let data = {
-    //     results: [],
-    //     sport: "Basketball",
-    //     image: "/assets/images/basketball.jpg"
-    //   }
+    
+    let data = {
+      results: [],
+      sport: "Basketball",
+      image: "/assets/images/basketball.jpg"
+    }
 
-    //   const $ = cheerio.load(response.data);
-
-    //   $("li.js-stream-content ").each((i, element) => {
-    //     let resultObj = {
-    //       title: $(element).children('div').children("div").children('div:nth-child(2)').children('div').children('a').children('h4').text(),
-    //       preview: "",
-    //       link: $(element).children('div').children("div").children('div:nth-child(2)').children('div').children('a').attr('href'),
-    //       sport: "Basketball",
-    //       image: $(element).children('div').children("div").children('div').children('img').attr("src"),
-    //       hasBeenRead: false
-    //     }
-    //     console.log(`Elem=====${$(element).children('div').children()}=====`)
-    //     console.log(resultObj)
-    //     //check if data exists, create object and then push if no data or error render no results
-    //     data.results.push(resultObj)
-    //   })
-    //   res.render("index", data)
-    // })
-    //   .catch((err) => console.log(err))
-
-
+    Article.find({ sport: 'Basketball'})
+      .then(function (articles) {
+        data.results = articles;
+        res.render('index', data);
+      })
+      .catch((err) => console.log(err));
   });
 
 

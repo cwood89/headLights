@@ -1,16 +1,16 @@
-const BaseballURL = 'https://sports.yahoo.com/mlb';
+const HockeyURL = 'https://sports.yahoo.com/nhl';
 
-const getBaseballData = async function (browser) {
+const getHockeyData = async function (browser) {
 
-  const baseballPage = await browser.newPage();
-  await baseballPage.setViewport({ width: 1366, height: 2500 })
-  await baseballPage.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36')
-  await baseballPage.setDefaultTimeout(40000);
-  await baseballPage.goto(BaseballURL, { waitUntil: 'networkidle2' });
-  await baseballPage.addScriptTag({ url: 'https://code.jquery.com/jquery-3.2.1.min.js' })
-  await baseballPage.waitForSelector('div#Main');
+  const hockeyPage = await browser.newPage();
+  await hockeyPage.setViewport({ width: 1366, height: 2500 })
+  await hockeyPage.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36')
+  await hockeyPage.setDefaultTimeout(40000);
+  await hockeyPage.goto(HockeyURL, { waitUntil: 'networkidle2' });
+  await hockeyPage.addScriptTag({ url: 'https://code.jquery.com/jquery-3.2.1.min.js' })
+  await hockeyPage.waitForSelector('div#Main');
 
-  let baseballResults = await baseballPage.evaluate(() => {
+  let hockeyResults = await hockeyPage.evaluate(() => {
     try {
       const $ = window.$; //otherwise the transpiler will rename it and won't work
       let data = [];
@@ -23,7 +23,7 @@ const getBaseballData = async function (browser) {
           title: title,
           preview: preview,
           link: `https://sports.yahoo.com${ link }`,
-          sport: 'Baseball',
+          sport: 'Hockey',
           image: image,
           hasBeenRead: false,
           saved: false
@@ -38,7 +38,7 @@ const getBaseballData = async function (browser) {
       console.log(err);
     }
   });
-  return baseballResults;
+  return hockeyResults;
 }
 
-module.exports = getBaseballData;
+module.exports = getHockeyData;

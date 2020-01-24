@@ -1,4 +1,4 @@
-//Launch puppeteer when page loads, fetch new articles in background. Serve cached articles to combat puppeteers speed.
+
 //Need to prevent duplicate articles from saving.
 //If new articles are added update sport page.
 
@@ -8,6 +8,12 @@ const exphbs = require("express-handlebars");
 const mongoose = require("mongoose");
 
 const PORT = process.env.PORT || 3000;
+
+const puppeteer = require('puppeteer');
+const Data = require('./data');
+const Article = require("./models");
+
+
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -34,8 +40,30 @@ require("./routes/htmlRoutes")(app);
 
 app.listen(PORT, function () {
   console.log("Server started. Go to localhost:" + PORT);
-});
 
-// app.on('listening', function() {
-//   // Put puppeteer function here
-// })
+  puppeteer.launch({
+    headless: true,
+  }).then(async browser => {
+    let data = [];
+    
+    let [basketballData, footballData, baseballData, soccerData, hockeyData] = await Promise.all([Data.basketball(browser), Data.football(browser), Data.baseball(browser), Data.soccer(browser), Data.hockey(browser)]);
+
+    data = await data.concat(basketballData, footballData, baseballData, soccerData, hockeyData)
+    
+    Article.collection.insertMany(data)
+      .then((data) => {
+        console.log('Articles Saved!');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    
+    await browser.close();
+
+  }).catch(function (error) {
+
+    console.error(error);
+    process.exit();
+
+  });
+})

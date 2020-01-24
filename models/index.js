@@ -12,13 +12,20 @@ var ArticleSchema = new Schema({
   link: {
     type: String,
   },
+  sport: {
+    type: String,
+  },
+  image: {
+    type: String,
+  },
   hasBeenRead: {
     type: Boolean,
     default: false
   },
-  sport: {
-    type: String,
-  }
+  saved: {
+    type: Boolean,
+    default: false
+  },
 });
 
 

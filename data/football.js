@@ -5,6 +5,7 @@ const getFootballData = async function (browser) {
   const footballPage = await browser.newPage();
   await footballPage.setViewport({ width: 1366, height: 2500 })
   await footballPage.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36')
+  await footballPage.setDefaultTimeout(40000);
   await footballPage.goto(FootballURL, { waitUntil: 'networkidle2' });
   await footballPage.waitForSelector('div#Main');
   await footballPage.addScriptTag({ url: 'https://code.jquery.com/jquery-3.2.1.min.js' })
@@ -24,7 +25,8 @@ const getFootballData = async function (browser) {
           link: `https://sports.yahoo.com${link}`,
           sport: 'Football',
           image: image,
-          hasBeenRead: false
+          hasBeenRead: false,
+          saved: false
         }
         if (!link.startsWith('http')) {
           data.push(element)
