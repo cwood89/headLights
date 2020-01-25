@@ -1,5 +1,4 @@
 
-//Need to prevent duplicate articles from saving.
 //If new articles are added update sport page.
 
 const express = require("express");
@@ -40,30 +39,44 @@ require("./routes/htmlRoutes")(app);
 
 app.listen(PORT, function () {
   console.log("Server started. Go to localhost:" + PORT);
-
+  
   puppeteer.launch({
-    headless: true,
+    headless: false,
   }).then(async browser => {
     let data = [];
     
     let [basketballData, footballData, baseballData, soccerData, hockeyData] = await Promise.all([Data.basketball(browser), Data.football(browser), Data.baseball(browser), Data.soccer(browser), Data.hockey(browser)]);
-
-    data = await data.concat(basketballData, footballData, baseballData, soccerData, hockeyData)
     
-    Article.collection.insertMany(data)
-      .then((data) => {
-        console.log('Articles Saved!');
+    data = await data.concat(basketballData, footballData, baseballData, soccerData, hockeyData);
+    await browser.close();
+
+    await Article.find({})
+      .then((articles) => {
+        let filteredData = data.filter(function (item) {
+          for (var i = 0, len = articles.length; i < len; i++) {
+            if (articles[i].title == item.title) {
+              return false;
+            }
+          }
+          return true
+        });
+        if (filteredData.length > 0) {
+          Article.collection.insertMany(filteredData)
+            .then((data) => {
+              console.log(data);
+              console.log('Articles Saved!');
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
       })
       .catch((err) => {
         console.log(err);
       });
     
-    await browser.close();
-
-  }).catch(function (error) {
-
-    console.error(error);
-    process.exit();
-
-  });
-})
+  })
+    .catch(function (error) {
+      console.error(error);
+    });
+});
