@@ -25,7 +25,7 @@ module.exports = function (app) {
       results: [],
       image: "/assets/images/baseball.jpg",
     };
-
+// need to sort by newest entries first
     Article.find({ saved: true })
       .then(function (articles) {
         data.results = articles;
@@ -44,10 +44,10 @@ module.exports = function (app) {
       image: "/assets/images/basketball.jpg"
     }
 
-    Article.find({ sport: 'Basketball' })
+    Article.find({ sport: 'Basketball' }).sort({'_id' : -1 })
       .then(function (articles) {
         data.results = articles;
-        res.render('index', data);
+        res.render('index', data);``
       })
       .catch((err) => console.log(err));
   });
@@ -60,7 +60,7 @@ module.exports = function (app) {
       image: "/assets/images/football.png"
     }
 
-    Article.find({ sport: 'Football' })
+    Article.find({ sport: 'Football' }).sort({'_id' : -1 })
       .then(function (articles) {
         data.results = articles;
         res.render('index', data);
@@ -77,7 +77,7 @@ module.exports = function (app) {
       image: "/assets/images/baseball.jpg"
     }
 
-    Article.find({ sport: 'Baseball' })
+    Article.find({ sport: 'Baseball' }).sort({'_id' : -1 })
       .then(function (articles) {
         data.results = articles;
         res.render('index', data);
@@ -94,7 +94,7 @@ module.exports = function (app) {
       image: "/assets/images/soccer.jpg"
     }
     
-    Article.find({ sport: 'Soccer' })
+    Article.find({ sport: 'Soccer' }).sort({'_id' : -1 })
       .then(function (articles) {
         data.results = articles;
         res.render('index', data);
@@ -110,7 +110,7 @@ module.exports = function (app) {
       sport: "Hockey",
       image: "/assets/images/hockey.jpg"
     }
-    Article.find({ sport: 'Hockey' })
+    Article.find({ sport: 'Hockey' }).sort({'_id' : -1 })
       .then(function (articles) {
         data.results = articles;
         res.render('index', data);
