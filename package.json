@@ -1,5 +1,8 @@
 {
   "name": "headliner",
+  "engines": {
+    "node": "8.11.4"
+  },
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
