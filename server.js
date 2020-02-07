@@ -37,7 +37,7 @@ require("./routes/htmlRoutes")(app);
 app.listen(PORT, function () {
   console.log("Server started. Go to localhost:" + PORT);
   
-  puppeteer.launch({
+  puppeteer.launch({ args: ['--no-sandbox'] ,
     headless: true,
   }).then(async browser => {
     data(browser);
