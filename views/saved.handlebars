@@ -11,12 +11,20 @@
   <div id="index{{@index}}" class="card mb-3" style="background-color:rgb(255, 255, 255, 0.85)">
     <h5 class="card-header">{{sport}}</h5>
     <div class="card-body">
-      <h5 class="card-title">{{title}}</h5>
-      <p class="card-text">{{preview}}</p>
-      <a onclick="openInNewTab('{{link}}');" class="btn btn-info" style="color: white">Go to
-        Article</a>
-      <a class="btn btn-warning" data-id={{this._id}} onclick="deleteArticle();" style="color: white"> Delete
-        Article</a>
+      <div class="media">
+        <div class="media-left">
+          <figure class="card-image image is-128x128">
+            <img src="{{image}}">
+          </figure>
+        </div>
+        <div class="media-content" style="padding-left: px;">
+          <h5 class="card-title">{{title}}</h5>
+          <p class="card-text">{{preview}}</p>
+          <a onclick="openInNewTab('{{link}}');" class="btn btn-info" style="color: white">Go to
+            Article</a>
+          <a class="btn btn-danger" onclick="deleteArticle('{{_id}}');" style="color: white">Delete Article</a>
+        </div>
+      </div>
     </div>
   </div>
   {{/each}}

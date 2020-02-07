@@ -3,24 +3,15 @@ const Article = require("../models");
 
 module.exports = function (app) {
 
-  app.post("/api/articles", (req, res) => {
-    data = {
-      title: req.body.title,
-      preview: req.body.preview,
-      link: req.body.link,
-      sport: req.body.sport,
-      hasBeenRead: req.body.hasBeenRead
-    };
-    console.log(data);
-
-    Article.create(data)
-      .then((dbArticle) => {
-        console.log(dbArticle);
-        res.json(dbArticle)
+  app.post("/api/articles/:id", (req, res) => {
+    Article.updateOne({ _id: req.params.id }, { $set: { saved: true }})
+      .then(data => {
+        res.send({
+          success: true
+        })
+        console.log(data);
+        console.log("saved");
       })
-      .catch((err) => {
-        console.log(err);
-      });
   });
 
 

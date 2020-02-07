@@ -4,30 +4,21 @@ function openInNewTab(url) {
 }
 
 
-function saveArticle() {
-  let target = $(event.target)
-  let parent = target.parent();
-  let article = {
-    title: parent.children(".card-title").text(),
-    preview: parent.children(".card-text").text(),
-    link: parent.children(".hidden-link").text(),
-    sport: parent.children(".hidden-sport").text(),
-    hasBeenRead: false
-  }
-  console.log(article);
+function saveArticle(id) {
   $.ajax({
     method: "POST",
-    url: "/api/articles/",
-    data: article
+    url: "/api/articles/" + id
   })
     .then(function (data) {
-      alert("Article is saved!");
+      if (data.success) {
+        alert("Article is saved!");
+      }
     })
     .catch((err) => console.log(err));
-  target.hide();
+    $(event.target).hide();
 }
 
-function deleteArticle() {
+function deleteArticle(id) {
   var id = $(event.target).attr("data-id");
   console.log("id " + id)
   $.ajax({

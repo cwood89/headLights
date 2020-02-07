@@ -11,16 +11,20 @@
   <div id="index{{@index}}" class="card mb-3" style="background-color:rgb(255, 255, 255, 0.85)">
     <h5 class="card-header">{{sport}}</h5>
     <div class="card-body">
-      <figure class="card-image image is-128x128">
-        <img src="{{image}}">
-      </figure>
-      <h5 class="card-title">{{title}}</h5>
-      <p class="card-text">{{preview}}</p>
-      <a onclick="openInNewTab('{{link}}');" class="btn btn-info" style="color: white">Go to
-        Article</a>
-      <a class="btn btn-danger" onclick="saveArticle();" style="color: white"> Save Article</a>
-      <span class="hidden-link">{{link}}</span>
-      <span class="hidden-sport">{{sport}}</span>
+      <div class="media">
+        <div class="media-left">
+          <figure class="card-image image is-128x128">
+            <img src="{{image}}">
+          </figure>
+        </div>
+        <div class="media-content" style="padding-left: px;">
+          <h5 class="card-title">{{title}}</h5>
+          <p class="card-text">{{preview}}</p>
+          <a onclick="openInNewTab('{{link}}');" class="btn btn-info" style="color: white">Go to
+            Article</a>
+          <a class="btn btn-danger" onclick="saveArticle('{{_id}}');" style="color: white">Save Article</a>
+        </div>
+      </div>
     </div>
   </div>
   {{/each}}

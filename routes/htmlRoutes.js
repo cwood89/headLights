@@ -26,7 +26,7 @@ module.exports = function (app) {
       image: "/assets/images/baseball.jpg",
     };
 // need to sort by newest entries first
-    Article.find({ saved: true })
+    Article.find({ saved: true }).sort({'_id' : -1 })
       .then(function (articles) {
         data.results = articles;
         res.render("saved", data);
