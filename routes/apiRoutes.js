@@ -9,19 +9,17 @@ module.exports = function (app) {
         res.send({
           success: true
         })
-        console.log(data);
-        console.log("saved");
       })
   });
 
 
   app.delete("/api/articles/:id", (req, res) => {
-    Article.deleteOne({ _id: req.params.id })
-      .then(data => {
-        res.json(data);
-      }).catch(function (err, data) {
-        res.json(err);
-      });
+    Article.updateOne({ _id: req.params.id }, { $set: { saved: false }})
+    .then(data => {
+      res.send({
+        success: true
+      })
+    })
   })
 
 }

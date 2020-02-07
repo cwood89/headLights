@@ -19,8 +19,6 @@ function saveArticle(id) {
 }
 
 function deleteArticle(id) {
-  var id = $(event.target).attr("data-id");
-  console.log("id " + id)
   $.ajax({
     method: "DELETE",
     url: "api/articles/" + id
